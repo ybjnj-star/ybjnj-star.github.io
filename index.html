@@ -9,17 +9,48 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
     }
 
+    html { font-size: 100%; }
+
     body {
+      font-size: 100%;
       background: #ffffff;
-      font-family: 'Helvetica Neue', 'Inter', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+      font-family: 'Times New Roman', 'Georgia', 'Palatino', 'Charter', 'STSong', '华文宋体', 'PingFang SC', serif;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       padding: 2rem 1rem;
       color: #1a1a1a;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #particle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5;
+    }
+
+    #ripple-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      mix-blend-mode: multiply;
+      opacity: 0.7;
     }
 
     .page-container {
@@ -27,129 +58,159 @@
       width: 100%;
       background: #ffffff;
       border: 1px solid #0a0a0a;
-      box-shadow: 12px 12px 0 rgba(0,0,0,0.08);
+      box-shadow: 12px 12px 0 rgba(0,0,0,0.06);
       padding: 2.2rem 2rem;
       transition: all 0.2s ease;
+      font-weight: 350;
+      letter-spacing: 0.02em;
+      position: relative;
+      z-index: 100;
+      overflow: hidden;
     }
 
-    /* 黑白分隔线 */
     .divider {
-      border: 0;
-      height: 2px;
-      background: #0a0a0a;
-      margin: 2rem 0 1.8rem 0;
-      opacity: 0.9;
-    }
-
-    .thin-divider {
       border: 0;
       height: 1px;
       background: #0a0a0a;
-      margin: 1.5rem 0 1.2rem 0;
-      opacity: 0.4;
+      margin: 2rem 0 1.8rem 0;
+      opacity: 0.5;
     }
 
-    /* 标题式样 */
     .section-title {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       text-transform: uppercase;
-      letter-spacing: 3px;
-      font-weight: 600;
+      letter-spacing: 4px;
+      font-weight: 400;
       color: #0a0a0a;
       margin-bottom: 1.2rem;
-      border-left: 8px solid #0a0a0a;
-      padding-left: 0.75rem;
-      line-height: 1.3;
+      border-left: 6px solid #0a0a0a;
+      padding-left: 0.9rem;
+      line-height: 1.4;
+      font-family: 'Times New Roman', 'Georgia', serif;
+      opacity: 0.8;
     }
 
-    /* 概述 */
     .overview-grid {
       display: flex;
       flex-direction: column;
       gap: 0.7rem;
+      width: 100%;
     }
 
     .overview-item {
       display: flex;
       align-items: baseline;
-      font-size: 1rem;
-      line-height: 1.5;
-      border-bottom: 1px dotted #aaa;
-      padding-bottom: 0.4rem;
+      font-size: 0.98rem;
+      line-height: 1.6;
+      border-bottom: 1px dotted #bbb;
+      padding: 0.4rem 0;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      cursor: default;
+      transform-origin: left center;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      box-sizing: border-box;
+      flex-shrink: 0;
+      transition: padding 0.15s ease, margin 0.15s ease;
     }
 
     .bullet {
-      font-weight: 600;
+      font-weight: 400;
       margin-right: 0.7rem;
       color: #0a0a0a;
       font-size: 1.1rem;
       width: 1.2rem;
       display: inline-block;
       text-align: center;
+      font-family: 'Courier New', monospace;
+      opacity: 0.7;
+      flex-shrink: 0;
+      transition: font-size 0.15s ease;
     }
 
     .overview-text {
-      color: #1f1f1f;
-      font-weight: 450;
-      letter-spacing: 0.01em;
+      color: #1a1a1a;
+      font-weight: 350;
+      word-break: break-word;
+      flex: 1 1 auto;
+      min-width: 0;
+      transition: font-size 0.15s ease;
     }
 
     .highlight-note {
       background: #f0f0f0;
       color: #0a0a0a;
-      font-weight: 500;
-      padding: 0.1rem 0.3rem;
-      border-radius: 2px;
+      font-weight: 400;
+      padding: 0.1rem 0.4rem;
+      border-radius: 0;
+      font-style: italic;
+      letter-spacing: 0.5px;
+      border: 1px solid #ccc;
     }
 
-    /* 价表卡片 */
     .price-grid {
       display: flex;
       flex-wrap: wrap;
       gap: 1.2rem;
       margin: 1rem 0 1.5rem 0;
+      width: 100%;
     }
 
     .price-card {
       flex: 1 1 180px;
+      min-width: 120px;
       border: 2px solid #0a0a0a;
       padding: 1rem 1rem 0.9rem 1rem;
       background: white;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      box-shadow: 5px 5px 0 #e0e0e0;
-      transition: 0.15s;
+      gap: 0.3rem;
+      box-shadow: 4px 4px 0 #e0e0e0;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      cursor: default;
+      transform-origin: center;
+      position: relative;
+      z-index: 1;
+      box-sizing: border-box;
+      transition: padding 0.15s ease, margin 0.15s ease, transform 0.15s ease;
     }
 
     .price-card:hover {
-      box-shadow: 2px 2px 0 #aaaaaa;
-      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0 #aaaaaa;
+      transform: translate(2px, 2px);
     }
 
     .price-amount {
-      font-size: 2.1rem;
-      font-weight: 700;
+      font-size: 2rem;
+      font-weight: 400;
       letter-spacing: -0.5px;
-      line-height: 1;
+      line-height: 1.1;
       color: #0a0a0a;
+      font-family: 'Times New Roman', 'Georgia', serif;
+      transition: font-size 0.15s ease;
     }
 
     .price-range {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: #444;
-      margin-top: -0.2rem;
-      font-weight: 450;
+      margin-top: -0.1rem;
+      font-weight: 350;
       border-top: 1px dashed #333;
       padding-top: 0.4rem;
+      letter-spacing: 0.3px;
+      transition: font-size 0.15s ease;
     }
 
     .price-label {
-      font-weight: 650;
-      font-size: 1.1rem;
+      font-weight: 400;
+      font-size: 1rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
       color: #000;
+      opacity: 0.8;
+      font-family: 'Times New Roman', serif;
+      transition: font-size 0.15s ease;
     }
 
     .extra-row {
@@ -158,26 +219,25 @@
       flex-wrap: wrap;
       align-items: center;
       margin: 0.8rem 0 0.2rem;
+      cursor: default;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      box-sizing: border-box;
+      transition: padding 0.15s ease, margin 0.15s ease;
     }
 
     .badge {
       background: #0a0a0a;
       color: white;
-      font-weight: 600;
-      padding: 0.3rem 1rem;
-      font-size: 0.9rem;
-      letter-spacing: 1px;
+      font-weight: 400;
+      padding: 0.25rem 1.2rem;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
       display: inline-block;
       border: 1px solid #0a0a0a;
-    }
-
-    .inline-code {
-      font-family: 'Courier New', monospace;
-      background: #f5f5f5;
-      padding: 0.15rem 0.5rem;
-      font-weight: 500;
-      border: 1px solid #ccc;
-      font-size: 0.9rem;
+      font-family: 'Georgia', serif;
+      transition: font-size 0.15s ease, padding 0.15s ease;
     }
 
     .rule-box {
@@ -185,47 +245,74 @@
       border-left: 4px solid #0a0a0a;
       padding: 1rem 1.2rem;
       margin: 1.2rem 0 1rem;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
       color: #1e1e1e;
+      font-family: 'Georgia', serif;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .rule-item {
       display: flex;
       gap: 0.4rem;
+      cursor: default;
+      transform-origin: left center;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      box-sizing: border-box;
+      transition: padding 0.15s ease, margin 0.15s ease;
     }
 
     .rule-icon {
-      font-weight: 700;
+      font-weight: 400;
       margin-right: 0.3rem;
+      font-family: 'Courier New', monospace;
+      opacity: 0.6;
+      flex-shrink: 0;
+      transition: font-size 0.15s ease;
     }
 
-    /* 其他须知 */
     .check-list {
       list-style: none;
       display: flex;
       flex-direction: column;
       gap: 0.9rem;
       margin-top: 0.5rem;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .check-list li {
       display: flex;
       gap: 0.6rem;
       align-items: flex-start;
-      font-size: 0.98rem;
-      line-height: 1.5;
-      border-bottom: 1px solid #e0e0e0;
-      padding-bottom: 0.7rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 0.7rem 0;
+      font-family: 'Georgia', serif;
+      cursor: default;
+      transform-origin: left center;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      box-sizing: border-box;
+      transition: padding 0.15s ease, margin 0.15s ease;
     }
 
     .check-icon {
-      font-size: 1.2rem;
-      font-weight: 700;
+      font-size: 1.1rem;
+      font-weight: 400;
       color: #000;
       min-width: 1.4rem;
+      font-family: 'Courier New', monospace;
+      opacity: 0.7;
+      flex-shrink: 0;
+      transition: font-size 0.15s ease;
     }
 
     .statement {
@@ -234,9 +321,18 @@
       color: #f0f0f0;
       padding: 0.9rem 1.2rem;
       margin: 1.2rem 0;
-      letter-spacing: 0.03em;
-      font-weight: 350;
+      letter-spacing: 0.04em;
+      font-weight: 300;
       border: 1px solid #000;
+      font-family: 'Georgia', serif;
+      font-size: 0.95rem;
+      cursor: default;
+      transform-origin: left center;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      box-sizing: border-box;
+      transition: padding 0.15s ease, margin 0.15s ease;
     }
 
     .footnote {
@@ -244,39 +340,62 @@
       flex-direction: column;
       gap: 0.7rem;
       margin-top: 0.8rem;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: #222;
       background: #f7f7f7;
       padding: 0.9rem 1rem;
       border: 1px dashed #333;
+      font-family: 'Georgia', serif;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .footnote div {
+      cursor: default;
+      transform-origin: left center;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      box-sizing: border-box;
+      transition: padding 0.15s ease, margin 0.15s ease;
     }
 
     .signature {
       text-align: right;
-      font-weight: 600;
-      letter-spacing: 0.5px;
+      font-weight: 400;
+      letter-spacing: 1px;
       margin-top: 1.8rem;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       text-transform: uppercase;
       color: #0a0a0a;
       border-top: 2px solid #0a0a0a;
-      padding-top: 1.2rem;
+      padding: 1.2rem 0 0 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-family: 'Times New Roman', serif;
+      cursor: default;
+      transform-origin: right center;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      box-sizing: border-box;
+      transition: padding 0.15s ease, margin 0.15s ease;
     }
 
     button {
       background: transparent;
       border: 2px solid #0a0a0a;
-      padding: 0.5rem 1.2rem;
-      font-weight: 600;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
+      padding: 0.4rem 1.2rem;
+      font-weight: 400;
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
       cursor: pointer;
       background: white;
       transition: 0.2s;
       text-transform: uppercase;
+      font-family: 'Georgia', serif;
+      flex-shrink: 0;
     }
 
     button:hover {
@@ -284,243 +403,687 @@
       color: white;
     }
 
-    .model-note {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-      margin-top: 0.4rem;
+    .satellite-time {
+      text-align: center;
+      font-size: 0.65rem;
+      color: #999;
+      letter-spacing: 1px;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      margin-top: -0.2rem;
+      margin-bottom: 0.3rem;
+      font-style: italic;
+      opacity: 0.7;
+    }
+
+    .animate-item {
+      opacity: 0;
+      transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .animate-item.left { transform: translateX(-30px); }
+    .animate-item.right { transform: translateX(30px); }
+    .animate-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .overview-item.animate-item:nth-child(1) { transition-delay: 0.00s; }
+    .overview-item.animate-item:nth-child(2) { transition-delay: 0.02s; }
+    .overview-item.animate-item:nth-child(3) { transition-delay: 0.04s; }
+    .overview-item.animate-item:nth-child(4) { transition-delay: 0.06s; }
+    .overview-item.animate-item:nth-child(5) { transition-delay: 0.08s; }
+    .overview-item.animate-item:nth-child(6) { transition-delay: 0.10s; }
+    .overview-item.animate-item:nth-child(7) { transition-delay: 0.12s; }
+    .overview-item.animate-item:nth-child(8) { transition-delay: 0.14s; }
+    .overview-item.animate-item:nth-child(9) { transition-delay: 0.16s; }
+    .check-list li.animate-item:nth-child(1) { transition-delay: 0.00s; }
+    .check-list li.animate-item:nth-child(2) { transition-delay: 0.02s; }
+    .check-list li.animate-item:nth-child(3) { transition-delay: 0.04s; }
+    .check-list li.animate-item:nth-child(4) { transition-delay: 0.06s; }
+    .check-list li.animate-item:nth-child(5) { transition-delay: 0.08s; }
+    .check-list li.animate-item:nth-child(6) { transition-delay: 0.10s; }
+    .check-list li.animate-item:nth-child(7) { transition-delay: 0.12s; }
+    .check-list li.animate-item:nth-child(8) { transition-delay: 0.14s; }
+    .check-list li.animate-item:nth-child(9) { transition-delay: 0.16s; }
+    .price-card.animate-item:nth-child(1) { transition-delay: 0.00s; }
+    .price-card.animate-item:nth-child(2) { transition-delay: 0.03s; }
+    .price-card.animate-item:nth-child(3) { transition-delay: 0.06s; }
+    .rule-item.animate-item:nth-child(1) { transition-delay: 0.00s; }
+    .rule-item.animate-item:nth-child(2) { transition-delay: 0.03s; }
+    .footnote div.animate-item:nth-child(1) { transition-delay: 0.00s; }
+    .footnote div.animate-item:nth-child(2) { transition-delay: 0.03s; }
+
+    /* ===== 歌词样式 ===== */
+    #lyrics-container {
+      position: fixed;
+      bottom: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10000;
+      pointer-events: none;
+      text-align: center;
+      width: 90%;
+      max-width: 600px;
+      font-family: 'Georgia', 'Times New Roman', serif;
+    }
+
+    #lyrics-text {
+      font-weight: 700;
+      color: rgba(180, 180, 180, 0.45);
+      font-size: 1.4rem;
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 20px rgba(200, 200, 200, 0.05);
+      transition: opacity 0.3s ease;
+      line-height: 1.8;
+      font-family: 'Georgia', 'Times New Roman', 'Palatino', serif;
+    }
+
+    #lyrics-timestamp {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6rem;
+      color: rgba(150, 150, 150, 0.2);
+      margin-top: 4px;
+      letter-spacing: 2px;
     }
 
     @media (max-width: 600px) {
-  body {
-    padding: 0.8rem 0.5rem;
-  }
+      #lyrics-text {
+        font-size: 1.1rem;
+      }
+      #lyrics-container {
+        bottom: 30px;
+      }
+    }
+    @media (max-width: 350px) {
+      #lyrics-text {
+        font-size: 0.9rem;
+      }
+    }
 
-  .page-container {
-    padding: 1.5rem 1rem;
-    box-shadow: 6px 6px 0 rgba(0,0,0,0.05);
-  }
+    @media (max-width: 600px) {
+      body { padding: 0.8rem 0.5rem; }
+      .page-container { padding: 1.5rem 1rem; box-shadow: 6px 6px 0 rgba(0,0,0,0.04); }
+      .price-grid { flex-direction: column; gap: 0.8rem; }
+      .price-card { flex: 1 1 100%; }
+      .price-amount { font-size: 1.7rem; }
+      .overview-item { font-size: 0.88rem; }
+      .check-list li { font-size: 0.85rem; }
+      .section-title { font-size: 0.75rem; letter-spacing: 3px; }
+    }
+    @media (orientation: landscape) and (min-width: 600px) {
+      body { padding: 0.5rem 1rem; align-items: center; }
+      .page-container { max-width: 5000px; margin: 0 auto; padding: 1.2rem 2.5rem; }
+      .price-grid { flex-direction: row; flex-wrap: nowrap; gap: 1rem; }
+      .price-card { flex: 1 1 0; }
+      .price-amount { font-size: 1.5rem; }
+      .overview-item { font-size: 0.78rem; padding-bottom: 0.2rem; }
+      .check-list li { font-size: 0.78rem; padding-bottom: 0.3rem; }
+    }
+    @media (max-width: 350px) {
+      .page-container { padding: 1rem 0.7rem; border: 1px solid #0a0a0a; box-shadow: none; }
+      .price-amount { font-size: 1.4rem; }
+      .badge { font-size: 0.7rem; padding: 0.2rem 0.6rem; }
+    }
 
-  .price-grid {
-    flex-direction: column;
-    gap: 0.8rem;
-  }
+    .page-container > * {
+      max-width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
 
-  .price-card {
-    flex: 1 1 100%;
-  }
+    .click-active {
+      z-index: 10 !important;
+      position: relative;
+    }
 
-  .price-amount {
-    font-size: 1.8rem;
-  }
+    .click-active .price-amount { font-size: 2.2rem !important; }
+    .click-active .price-label { font-size: 1.1rem !important; }
+    .click-active .price-range { font-size: 0.85rem !important; }
+    .click-active .overview-text { font-size: 1.08rem !important; }
+    .click-active .bullet { font-size: 1.2rem !important; }
+    .click-active .check-icon { font-size: 1.2rem !important; }
+    .click-active .rule-icon { font-size: 1.0rem !important; }
+    .click-active .badge { font-size: 0.95rem !important; padding: 0.3rem 1.4rem !important; }
+    .click-active .statement { font-size: 1.05rem !important; padding: 1.0rem 1.4rem !important; }
+    .click-active .signature { font-size: 0.95rem !important; padding-top: 1.4rem !important; }
+    .click-active .footnote div { font-size: 0.98rem !important; }
+    .click-active .rule-item { font-size: 1.0rem !important; }
+    .click-active .check-list li { font-size: 1.05rem !important; }
+    .click-active .overview-item { font-size: 1.08rem !important; padding: 0.5rem 0 !important; }
+    .click-active .extra-row { font-size: 1.0rem !important; }
 
-  .overview-item {
-    font-size: 0.9rem;
-  }
-
-  .check-list li {
-    font-size: 0.88rem;
-  }
-
-  .section-title {
-    font-size: 0.8rem;
-    letter-spacing: 2px;
-  }
-
-  /* 大标题缩小 */
-  .page-container > div:first-child {
-    font-size: 1.4rem !important;
-  }
-
-  div[style*="radial-gradient"] {
-    margin-left: 2% !important;
-    margin-right: 2% !important;
-  }
-}
-
-/* 横屏适配 */
-@media (orientation: landscape) and (min-width: 600px) {
-  body {
-    padding: 0.5rem 1rem;
-    align-items: center;
-  }
-
-  .page-container {
-    max-width: 5000px;
-    margin: 0 auto;
-    padding: 1.2rem 2.5rem;
-  }
-
-  .price-grid {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 1rem;
-  }
-
-  .price-card {
-    flex: 1 1 0;
-  }
-
-  .price-amount {
-    font-size: 1.5rem;
-  }
-
-  .overview-grid {
-    gap: 0.3rem;
-  }
-
-  .overview-item {
-    font-size: 0.8rem;
-    padding-bottom: 0.2rem;
-  }
-
-  .check-list li {
-    font-size: 0.8rem;
-    padding-bottom: 0.3rem;
-  }
-}
-
-/* 超小屏幕 */
-@media (max-width: 350px) {
-  .page-container {
-    padding: 1rem 0.7rem;
-    border: 1px solid #0a0a0a;
-    box-shadow: none;
-  }
-
-  .price-amount {
-    font-size: 1.5rem;
-  }
-
-  .badge {
-    font-size: 0.75rem;
-    padding: 0.2rem 0.6rem;
-  }
-}
+    .squeeze .price-amount { font-size: 1.7rem !important; }
+    .squeeze .price-label { font-size: 0.85rem !important; }
+    .squeeze .price-range { font-size: 0.65rem !important; }
+    .squeeze .overview-text { font-size: 0.88rem !important; }
+    .squeeze .bullet { font-size: 0.95rem !important; }
+    .squeeze .check-icon { font-size: 0.95rem !important; }
+    .squeeze .rule-icon { font-size: 0.85rem !important; }
+    .squeeze .badge { font-size: 0.75rem !important; padding: 0.2rem 1.0rem !important; }
+    .squeeze .statement { font-size: 0.85rem !important; padding: 0.7rem 1.0rem !important; }
+    .squeeze .signature { font-size: 0.75rem !important; padding-top: 1.0rem !important; }
+    .squeeze .footnote div { font-size: 0.78rem !important; }
+    .squeeze .rule-item { font-size: 0.82rem !important; }
+    .squeeze .check-list li { font-size: 0.85rem !important; padding: 0.5rem 0 !important; }
+    .squeeze .overview-item { font-size: 0.88rem !important; padding: 0.3rem 0 !important; }
+    .squeeze .extra-row { font-size: 0.85rem !important; }
+    .squeeze .price-card { transform: scale(0.95) !important; opacity: 0.7 !important; }
+    .squeeze { opacity: 0.7 !important; transform: scale(0.96) !important; }
   </style>
 </head>
 <body>
-  <div class="page-container">
-    
-    <div style="text-align: center; font-weight: 900; font-size: 1.8rem; letter-spacing: 2px; margin-bottom: 0.1rem; color: #0a0a0a;">◇ Hi ◇</div>
-    
-    <div style="text-align: center; font-size: 0.85rem; color: #666; margin-bottom: 1.2rem;">『未成年人请在监护人的陪同下游玩和下单』</div>
-    
-<div style="height: 12px; background: radial-gradient(circle, transparent 3.5px, #0a0a0a 5.1px, transparent 4.5px) repeat-x; background-size: 24px 12px; margin: 1.5rem 1%;"></div>
+  <canvas id="particle-canvas"></canvas>
+  <canvas id="ripple-grid"></canvas>
 
-    <!-- 主播的概述 -->
-    
-    <div class="section-title" style="font-weight: 400;color: #888888;">概述 ◇ 关于我</div>
-    <div class="overview-grid">
-      <div class="overview-item"><span class="bullet">※</span><span class="overview-text">散陪 / 个人陪 / 野陪。</span></div>
-      <div class="overview-item"><span class="bullet">※</span><span class="overview-text">已成年、具体年龄拒问(因为不熟)。</span></div>
-      <div class="overview-item"><span class="bullet">※</span><span class="overview-text">无性别 / 性别拒问。</span></div>
-      <div class="overview-item"><span class="bullet">※</span>
-      
-      <span class="overview-text">不连麦/发语音/打电话、爆照/打视频、涉三、所在地区拒问。</span></div>
-      
-      <div class="overview-item"><span class="bullet">※</span>
-      <span class="overview-text">已读请回。</span></div>
-      
-      <div class="overview-item"><span class="bullet">※</span>
-      <span class="overview-text">平时不会主动私信骚扰单主。</span></div>
-      
-      <div class="overview-item"><span class="bullet">※</span>
-      
-      <span class="overview-text"><span class="highlight-note">会时不时变动价格，有时天价。</span></span></div>
-      
-      <div class="overview-item"><span class="bullet">※</span>
-      <span class="overview-text">不混圈。</span></div>
-      
-      <div class="overview-item" style="border-bottom: none;"><span class="bullet">※</span>
-      <span class="overview-text"><strong>搬我详情页（任何用途）微改需署名。</strong></span></div>
-    </div>
+  <div id="lyrics-container">
+    <div id="lyrics-text">♪ ♫ ♪</div>
+    <div id="lyrics-timestamp"></div>
+  </div>
+
+  <div class="page-container">
+    <div class="animate-item left" style="text-align: center; font-weight: 400; font-size: 1.8rem; letter-spacing: 4px; margin-bottom: 0.1rem; color: #0a0a0a; font-family: 'Times New Roman', 'Georgia', serif;">❖ Hi ❖</div>
+    <div class="satellite-time" id="sat-time"></div>
+    <div class="animate-item right" style="text-align: center; font-size: 0.8rem; color: #555; margin-bottom: 1.2rem; font-family: 'Georgia', serif; letter-spacing: 1px; border-bottom: 1px solid #ddd; padding-bottom: 0.4rem;">『 未成年人请在监护人的陪同下游玩和下单 』</div>
+
+    <div style="height: 12px; background: radial-gradient(circle, transparent 3.2px, #0a0a0a 4.8px, transparent 4.2px) repeat-x; background-size: 22px 12px; margin: 1.5rem 1%; opacity: 0.4;"></div>
+
+    <div class="section-title animate-item left" style="font-weight: 300;color: #777; border-left-color: #888;">概述 ◇ 关于我</div>
+    <div class="overview-grid" id="overviewGrid"></div>
 
     <hr class="divider" style="margin-top: 1.5rem;">
+    <div style="height: 12px; background: radial-gradient(circle, transparent 3.2px, #0a0a0a 4.8px, transparent 4.2px) repeat-x; background-size: 22px 12px; margin: 1.5rem 1%; opacity: 0.4;"></div>
 
-<div style="height: 12px; background: radial-gradient(circle, transparent 3.5px, #0a0a0a 5.1px, transparent 4.5px) repeat-x; background-size: 24px 12px; margin: 1.5rem 1%;"></div>
+    <div class="section-title animate-item left" style="border-left: none; text-align: center; padding-left: 0;font-weight: 300;color: #777; letter-spacing: 6px;">◇ 价格 ◇</div>
+    <div class="price-grid" id="priceGrid"></div>
 
-    <!-- 价表 -->
-    <div class="section-title" style="border-left: none; text-align: center; padding-left: 0;font-weight: 500;color: #88888;">◇ 价格 ◇</div>
-    <div class="price-grid">
-      <div class="price-card">
-        <span class="price-label">两小时：</span>
-        <span class="price-amount">￥13</span>
-        <div class="price-range">补差价可能 13-23r</div>
-      </div>
-      <div class="price-card">
-        <span class="price-label">一小时：</span>
-        <span class="price-amount">￥7</span>
-        <div class="price-range">补差价可能 7-17r</div>
-      </div>
-      <div class="price-card">
-        <span class="price-label">半小时：</span>
-        <span class="price-amount">￥4</span>
-        <div class="price-range">补差价可能 4-14r</div>
-      </div>
-    </div>
+    <div class="extra-row animate-item left" id="extraRow"></div>
 
-    <div class="extra-row">
-      <div class="badge">月卡 19r</div>
-    </div>
+    <div class="rule-box" style="border-left: none; padding-left: 0; background: #fcfcfc;" id="ruleBox"></div>
 
-    <div class="rule-box" style="border-left: none; padding-left: 0;">
-      <div class="rule-item"><span class="rule-icon">◆</span> <strong>补差价规则：</strong>根据结单后我的状态加价（例如饿了很久/不舒服），或在特殊时间找我（如我要睡了）。</div>
-      <div class="rule-item"><span class="rule-icon">◆</span> <strong>月卡规则：</strong>下单后一个月内每日首次点单减1r。</div>
-    </div>
-
-<div style="height: 12px; background: radial-gradient(circle, transparent 3.5px, #0a0a0a 5.1px, transparent 4.5px) repeat-x; background-size: 24px 12px; margin: 1.5rem 1%;"></div>
-
+    <div style="height: 12px; background: radial-gradient(circle, transparent 3.2px, #0a0a0a 4.8px, transparent 4.2px) repeat-x; background-size: 22px 12px; margin: 1.5rem 1%; opacity: 0.4;"></div>
     <hr class="divider">
 
-    <!-- 其他须知 -->
-    <div class="section-title" style="font-weight: 400;color: #888888;">其他须知 ◇ 给路人</div>
-    
-    
-    <ul class="check-list">
-    
-    <!-- ———————————————————————————————————————— -->
-    
-      <li><span class="check-icon">☑</span>单前可提几乎任何要求，不会当成迷惑人或找茬；单内板可以做一切想做的、说的，允许极端内容。</li>
-      <li><span class="check-icon">☑</span> 默认上线后以友人身份相处，发言行为在此预设上。不混圈，但圈内要求我会照做。</li>
-      <li><span class="check-icon">☑</span> 不会“三恋”和弹琴。</li>
-      <li><span class="check-icon">☑</span> 不细分挂机、闲聊等业务，其他需求需详细说明。</li>
-      <li><span class="check-icon">☑</span> 完全欢迎不点单只是私信闲聊。</li>
-      <li><span class="check-icon">☑</span> 不属于任何团陪/平台陪，风格有明显区别；习惯团培玩法请谨慎下单。</li>
-      <li><span class="check-icon">☑</span> 先玩后付，结束后觉得不值可退1-2元。</li>
-      <li><span class="check-icon">☑</span> 单主可对外分享单内内容，但需将除建模外的个人信息打码。</li>
-      <li style="border-bottom: none;"><span class="check-icon">☑</span> 装扮不多，但有武士裤。默认萌新装接到单。</li>
-      
-    </ul>
+    <div class="section-title animate-item left" style="font-weight: 300;color: #777;">其他须知 ◇ 给路人</div>
+    <ul class="check-list" id="checkList"></ul>
 
-    <!-- 声明 -->
-    
     <hr class="divider">
-    
-    <div class="statement">
-     声明：我有义务保密对话内容，服务期间所有对话不会对外提及或用于任何非服务目的。
+    <div class="statement animate-item left">声明：我有义务保密对话内容，服务期间所有对话不会对外提及或用于任何非服务目的。</div>
+
+    <div class="footnote" id="footnote"></div>
+
+    <div class="animate-item left" style="margin-top: 1rem; padding: 0.6rem 0; font-size: 0.88rem; color: #2b2b2b; border-top: 1px solid #ccc; font-family: 'Georgia', serif; width:100%; box-sizing:border-box;">
+      <span style="font-weight: 400; letter-spacing:1px;">❖ 其他补充：</span>没对象、没结婚、不卡单主性别、熟人可下单、评论区可打广告或发其他内容、可加联系方式、没尝试过"三恋"但点过。
     </div>
 
-    <!-- 碎碎念及补充 -->
-    <div class="footnote">
-      <div><span style="font-weight:700;"> 碎碎念：</span>发现我主要靠内推，点我的不多，结束后要是喜欢我可以推荐给你的朋友！</div>
-      <div><span style="font-weight:700;"> 下单前：</span>私信告知雷点、需要我完成和注意的、留好友码。</div>
+    <div class="signature animate-item right">
+      <span style="letter-spacing: 2px; opacity:0.7;">联系 · 入口</span>
+      <button id="contactBtn">可以私信约时间</button>
     </div>
 
-    <div style="margin-top: 1rem; padding: 0.6rem 0; font-size: 0.9rem; color: #2b2b2b; border-top: 1px solid #ccc;">
-      <span style="font-weight: 700;">❖ 其他补充：</span>没对象、没结婚、不卡单主性别、熟人可下单、评论区可打广告或发其他内容、可加联系方式、没尝试过“三恋”但点过。
-    </div>
-
-    <div class="signature">
-      <span>联系 · 入口</span>
-      <button onclick="window.location.href='https://qm.qq.com/q/qdMywhvfhe'">可以私信约时间</button>
-    </div>
-
-    <!-- 小字说明 -->
-    <div style="font-size: 0.7rem; margin-top: 1.2rem; color: #555; text-align: right; letter-spacing: 0.3px;">
+    <div style="font-size: 0.65rem; margin-top: 1.2rem; color: #777; text-align: right; letter-spacing: 0.5px; font-family: 'Georgia', serif; border-top: 1px solid #ddd; padding-top: 0.6rem;">
       † 以上文本及排版仅供学习交流 †
     </div>
   </div>
+
+  <script>
+    (function() {
+      const overviewData = [
+        { text: '散陪 / 个人陪 / 野陪。' },
+        { text: '已成年、具体年龄拒问 <span style="font-style: italic; opacity:0.6;">(因为不熟)</span>。' },
+        { text: '无性别 / 性别拒问。' },
+        { text: '不连麦/发语音/打电话、爆照/打视频、涉三、所在地区拒问。' },
+        { text: '已读请回。' },
+        { text: '平时不会主动私信骚扰单主。' },
+        { text: '<span class="highlight-note">会时不时变动价格，有时天价。</span>' },
+        { text: '不混圈。' },
+        { text: '<strong>搬我详情页（任何用途）微改需署名。</strong>', border: false }
+      ];
+
+      const priceData = [
+        { label: '两小时：', amount: '￥13', range: '补差价可能 13-23r' },
+        { label: '一小时：', amount: '￥7', range: '补差价可能 7-17r' },
+        { label: '半小时：', amount: '￥4', range: '补差价可能 4-14r' }
+      ];
+
+      const ruleData = [
+        { text: '<strong>补差价规则：</strong>根据结单后我的状态加价（例如饿了很久/不舒服），或在特殊时间找我（如我要睡了）。' },
+        { text: '<strong>月卡规则：</strong>下单后一个月内每日首次点单减1r。' }
+      ];
+
+      const checkData = [
+        '单前可提几乎任何要求，不会当成迷惑人或找茬；单内板可以做一切想做的、说的，允许极端内容。',
+        '默认上线后以友人身份相处，发言行为在此预设上。不混圈，但圈内要求我会照做。',
+        '不会"三恋"和弹琴。',
+        '不细分挂机、闲聊等业务，其他需求需详细说明。',
+        '完全欢迎不点单只是私信闲聊。',
+        '不属于任何团陪/平台陪，风格有明显区别；习惯团培玩法请谨慎下单。',
+        '先玩后付，结束后觉得不值可退1-2元。',
+        '单主可对外分享单内内容，但需将除建模外的个人信息打码。',
+        '装扮不多，但有武士裤。默认萌新装接到单。'
+      ];
+
+      const footnoteData = [
+        '<span style="font-weight:400; letter-spacing:1px;">◇ 碎碎念：</span>发现我主要靠内推，点我的不多，结束后要是喜欢我可以推荐给你的朋友！',
+        '<span style="font-weight:400; letter-spacing:1px;">◇ 下单前：</span>私信告知雷点、需要我完成和注意的、留好友码。'
+      ];
+
+      function renderOverview() {
+        const grid = document.getElementById('overviewGrid');
+        grid.innerHTML = overviewData.map((item, i) => {
+          const direction = i % 2 === 0 ? 'left' : 'right';
+          const borderStyle = item.border === false ? 'border-bottom: none;' : '';
+          return `<div class="overview-item animate-item ${direction}" style="${borderStyle}"><span class="bullet">※</span><span class="overview-text">${item.text}</span></div>`;
+        }).join('');
+      }
+
+      function renderPrices() {
+        const grid = document.getElementById('priceGrid');
+        grid.innerHTML = priceData.map((p, i) => {
+          const direction = i === 1 ? 'right' : 'left';
+          return `<div class="price-card animate-item ${direction}"><span class="price-label">${p.label}</span><span class="price-amount">${p.amount}</span><div class="price-range">${p.range}</div></div>`;
+        }).join('');
+      }
+
+      function renderExtra() {
+        const row = document.getElementById('extraRow');
+        row.innerHTML = `<div class="badge">月卡 19r</div><span style="font-size:0.8rem; color:#444; font-style:italic; letter-spacing:0.5px;">————每日首单减1r</span>`;
+      }
+
+      function renderRules() {
+        const box = document.getElementById('ruleBox');
+        box.innerHTML = ruleData.map((r, i) => {
+          const direction = i === 0 ? 'right' : 'left';
+          return `<div class="rule-item animate-item ${direction}"><span class="rule-icon">◆</span> ${r.text}</div>`;
+        }).join('');
+      }
+
+      function renderChecks() {
+        const list = document.getElementById('checkList');
+        list.innerHTML = checkData.map((text, i) => {
+          const direction = i % 2 === 0 ? 'right' : 'left';
+          const border = i === checkData.length - 1 ? 'border-bottom: none;' : '';
+          return `<li class="animate-item ${direction}" style="${border}"><span class="check-icon">☑</span>${text}</li>`;
+        }).join('');
+      }
+
+      function renderFootnote() {
+        const fn = document.getElementById('footnote');
+        fn.innerHTML = footnoteData.map((html, i) => {
+          const direction = i === 0 ? 'right' : 'left';
+          return `<div class="animate-item ${direction}">${html}</div>`;
+        }).join('');
+      }
+
+      renderOverview();
+      renderPrices();
+      renderExtra();
+      renderRules();
+      renderChecks();
+      renderFootnote();
+
+      document.addEventListener('selectstart', e => e.preventDefault());
+      document.addEventListener('contextmenu', e => e.preventDefault());
+
+      const CLICKABLE_SELECTOR = '.overview-item, .price-card, .rule-item, .check-list li, .statement, .footnote div, .signature, .extra-row';
+      let activeEl = null;
+      let clearTimer = null;
+
+      function getSiblings(el) {
+        const parent = el.parentElement;
+        if (!parent) return [];
+        return Array.from(parent.children).filter(child => child !== el && child.matches(CLICKABLE_SELECTOR));
+      }
+
+      function getCardSiblings(el) {
+        const grid = el.closest('.price-grid');
+        if (!grid) return [];
+        return Array.from(grid.children).filter(child => child !== el && child.classList.contains('price-card'));
+      }
+
+      function clearAllEffects() {
+        document.querySelectorAll('.click-active, .squeeze').forEach(el => {
+          el.classList.remove('click-active', 'squeeze');
+          el.style.transform = '';
+          el.style.opacity = '';
+          el.style.zIndex = '';
+        });
+      }
+
+      function applyEffects(target) {
+        clearAllEffects();
+        activeEl = target;
+        target.classList.add('click-active');
+        target.style.zIndex = '10';
+
+        const siblings = target.classList.contains('price-card') ? getCardSiblings(target) : getSiblings(target);
+        siblings.forEach(sib => {
+          sib.classList.add('squeeze');
+          sib.style.transform = 'scale(0.96)';
+          sib.style.opacity = '0.7';
+        });
+      }
+
+      function handlePointerDown(e) {
+        const x = e.touches ? e.touches[0].clientX : e.clientX;
+        const y = e.touches ? e.touches[0].clientY : e.clientY;
+        const elements = document.querySelectorAll(CLICKABLE_SELECTOR);
+        let target = null;
+        for (const el of elements) {
+          const rect = el.getBoundingClientRect();
+          if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+            target = el;
+            break;
+          }
+        }
+        if (!target) return;
+        if (clearTimer) { clearTimeout(clearTimer); clearTimer = null; }
+        applyEffects(target);
+      }
+
+      function handlePointerUp() {
+        if (!activeEl) return;
+        if (clearTimer) clearTimeout(clearTimer);
+        clearTimer = setTimeout(() => {
+          clearAllEffects();
+          activeEl = null;
+          clearTimer = null;
+        }, 400);
+      }
+
+      function handlePointerLeave() {
+        if (activeEl) {
+          if (clearTimer) clearTimeout(clearTimer);
+          clearAllEffects();
+          activeEl = null;
+          clearTimer = null;
+        }
+      }
+
+      document.addEventListener('mousedown', handlePointerDown);
+      document.addEventListener('mouseup', handlePointerUp);
+      document.addEventListener('mouseleave', handlePointerLeave);
+      document.addEventListener('touchstart', handlePointerDown, { passive: true });
+      document.addEventListener('touchend', handlePointerUp);
+      document.addEventListener('touchcancel', handlePointerUp);
+
+      document.querySelectorAll('button, a').forEach(el => {
+        el.addEventListener('mousedown', e => e.stopPropagation());
+        el.addEventListener('touchstart', e => e.stopPropagation());
+      });
+
+      document.getElementById('contactBtn').addEventListener('click', () => {
+        window.location.href = 'https://qm.qq.com/q/qdMywhvfhe';
+      });
+
+      const rippleCanvas = document.getElementById('ripple-grid');
+      const ctxRipple = rippleCanvas.getContext('2d');
+      let width, height;
+      const fadeSpeed = 0.006;
+      const maxRadius = 180;
+      const gridSize = 26;
+      let touches = [];
+      let lastX = null, lastY = null, lastTime = null;
+      const offscreen = document.createElement('canvas');
+      const offCtx = offscreen.getContext('2d');
+
+      function resizeRipple() {
+        width = rippleCanvas.width = window.innerWidth;
+        height = rippleCanvas.height = window.innerHeight;
+        buildGrid();
+      }
+
+      function buildGrid() {
+        offscreen.width = width;
+        offscreen.height = height;
+        offCtx.fillStyle = '#faf8f5';
+        offCtx.fillRect(0, 0, width, height);
+        offCtx.fillStyle = '#ffffff';
+        for (let x = 0; x < width; x += gridSize) {
+          for (let y = 0; y < height; y += gridSize) {
+            if ((Math.floor(x / gridSize) + Math.floor(y / gridSize)) % 2 === 0) {
+              offCtx.fillRect(x, y, gridSize, gridSize);
+            }
+          }
+        }
+      }
+
+      window.addEventListener('resize', resizeRipple);
+      resizeRipple();
+
+      class TouchPoint {
+        constructor(x, y, speed) {
+          this.x = x;
+          this.y = y;
+          this.life = 1;
+          this.speed = speed;
+          this.radius = 30 + speed * 30;
+        }
+        update() {
+          this.life -= fadeSpeed * (0.8 + this.speed * 0.4);
+          this.radius += (1 + this.speed) * 1.2;
+          if (this.radius > maxRadius) this.radius = maxRadius;
+        }
+      }
+
+      function animateRipple() {
+        ctxRipple.clearRect(0, 0, width, height);
+        touches.forEach(t => {
+          t.update();
+          if (t.life <= 0) return;
+          const r = t.radius;
+          ctxRipple.save();
+          ctxRipple.beginPath();
+          ctxRipple.arc(t.x, t.y, r, 0, Math.PI * 2);
+          ctxRipple.clip();
+          ctxRipple.drawImage(offscreen, 0, 0);
+          const gradInner = ctxRipple.createRadialGradient(t.x, t.y, r * 0.08, t.x, t.y, r * 0.5);
+          gradInner.addColorStop(0, `rgba(255,255,255,${t.life * 0.15})`);
+          gradInner.addColorStop(0.5, `rgba(255,255,255,${t.life * 0.35})`);
+          gradInner.addColorStop(1, `rgba(255,255,255,${t.life * 0.6})`);
+          ctxRipple.fillStyle = gradInner;
+          ctxRipple.fillRect(t.x - r, t.y - r, r * 2, r * 2);
+          const gradOuter = ctxRipple.createRadialGradient(t.x, t.y, r * 0.5, t.x, t.y, r);
+          gradOuter.addColorStop(0, `rgba(255,255,255,${t.life * 0.5})`);
+          gradOuter.addColorStop(0.6, `rgba(255,255,255,${t.life * 0.2})`);
+          gradOuter.addColorStop(1, 'rgba(255,255,255,0)');
+          ctxRipple.fillStyle = gradOuter;
+          ctxRipple.fillRect(t.x - r, t.y - r, r * 2, r * 2);
+          ctxRipple.restore();
+        });
+        touches = touches.filter(t => t.life > 0.001);
+        requestAnimationFrame(animateRipple);
+      }
+      animateRipple();
+
+      function addTouchPoint(e) {
+        const x = e.touches ? e.touches[0].clientX : e.clientX;
+        const y = e.touches ? e.touches[0].clientY : e.clientY;
+        const now = performance.now();
+        let speed = 1;
+        if (lastX !== null && lastY !== null && lastTime !== null) {
+          const dx = x - lastX, dy = y - lastY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const dt = now - lastTime;
+          if (dt > 0 && dt < 200) speed = Math.min(5, Math.max(0.5, dist / dt * 8));
+        }
+        lastX = x; lastY = y; lastTime = now;
+        if (!touches.some(t => Math.hypot(t.x - x, t.y - y) < 15)) {
+          touches.push(new TouchPoint(x, y, speed));
+          if (touches.length > 20) touches.shift();
+        }
+      }
+      window.addEventListener('mousemove', addTouchPoint, { passive: true });
+      window.addEventListener('touchmove', addTouchPoint, { passive: true });
+      window.addEventListener('touchstart', addTouchPoint, { passive: true });
+
+      const particleCanvas = document.getElementById('particle-canvas');
+      const ctxParticle = particleCanvas.getContext('2d');
+      let w, h;
+      const MAX_PARTICLES = 160;
+      const particles = [];
+
+      function resizeParticle() {
+        w = particleCanvas.width = window.innerWidth;
+        h = particleCanvas.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resizeParticle);
+      resizeParticle();
+
+      class Particle {
+        constructor() {
+          this.reset();
+          this.y = Math.random() * h;
+          this.x = Math.random() * w;
+        }
+        reset() {
+          this.x = Math.random() * w;
+          this.y = -10 - Math.random() * 20;
+          this.size = 2 + Math.random() * 5;
+          this.speed = 0.3 + Math.random() * 0.8;
+          this.opacity = 0.15 + Math.random() * 0.35;
+          this.wind = (Math.random() - 0.5) * 0.4;
+        }
+        update() {
+          this.y += this.speed;
+          this.x += this.wind + Math.sin(this.y * 0.01) * 0.1;
+          if (this.y > h + 20) { this.reset(); this.y = -10 - Math.random() * 20; }
+          if (this.x < -20) this.x = w + 20;
+          if (this.x > w + 20) this.x = -20;
+        }
+        draw() {
+          ctxParticle.beginPath();
+          ctxParticle.arc(this.x, this.y, this.size * 0.6, 0, Math.PI * 2);
+          ctxParticle.fillStyle = `rgba(180, 180, 185, ${this.opacity})`;
+          ctxParticle.shadowColor = 'rgba(180,180,185,0.1)';
+          ctxParticle.shadowBlur = 6;
+          ctxParticle.fill();
+          ctxParticle.shadowBlur = 0;
+        }
+      }
+
+      for (let i = 0; i < MAX_PARTICLES; i++) particles.push(new Particle());
+
+      function drawParticles() {
+        ctxParticle.clearRect(0, 0, w, h);
+        particles.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(drawParticles);
+      }
+      drawParticles();
+
+      const audio = new Audio();
+      audio.src = 'd.mp3';
+      audio.loop = true;
+      audio.volume = 0.4;
+      function tryAutoPlay() {
+        audio.play().catch(() => {
+          const playOnce = () => { audio.play().catch(() => {}); document.removeEventListener('click', playOnce); };
+          document.addEventListener('click', playOnce, { once: true });
+        });
+      }
+      window.addEventListener('load', tryAutoPlay);
+      document.querySelector('.page-container').addEventListener('click', () => {
+        if (audio.paused) audio.play().catch(() => {});
+      }, { passive: true });
+
+      function updateSatTime() {
+        const now = new Date();
+        const timeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+        document.getElementById('sat-time').textContent = `设备时间 ${timeStr} · 同步中`;
+      }
+      updateSatTime();
+      setInterval(updateSatTime, 1000);
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          entry.target.classList.toggle('visible', entry.isIntersecting);
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.animate-item').forEach(item => observer.observe(item));
+
+      const lyricsData = [
+        { time: 30.25, text: "Do you have something to say?" },
+        { time: 35.85, text: "My emotions" },
+        { time: 37.47, text: "Bottled up" },
+        { time: 38.89, text: "Cuz I don't know whatcha sayin'" },
+        { time: 42.54, text: "My thoughts scattered around" },
+        { time: 47.96, text: "My mind driven insane" },
+        { time: 50.68, text: "I guess you can call me crazy" },
+        { time: 54.52, text: "Is it meant to be?" },
+        { time: 56.12, text: "Are we truly a match" },
+        { time: 57.53, text: "Can't forsee" },
+        { time: 59.35, text: "I'm taken by shock" },
+        { time: 60.86, text: "Are you meant for me?" },
+        { time: 62.82, text: "I'm shaken by the thought" },
+        { time: 64.51, text: "Will you set me free?" },
+        { time: 66.50, text: "I've found my missing piece" },
+        { time: 69.43, text: "although it's hard to believe" },
+        { time: 74.96, text: "Ooh I won't pretend" },
+        { time: 76.40, text: "I'm obsessed with you" },
+        { time: 79.39, text: "And I'm sorry" },
+        { time: 83.49, text: "I wasn't honest when I met you" },
+        { time: 87.00, text: "To tell you the truth, I wanted you for me" },
+        { time: 92.52, text: "You for me" },
+        { time: 97.37, text: "You for me" },
+        { time: 102.25, text: "Programmed to love" },
+        { time: 108.18, text: "Programmed to love" },
+        { time: 114.18, text: "Programmed to love" },
+        { time: 119.82, text: "This feeling's at the tip of my tongue" },
+        { time: 123.48, text: "I feel 'in love'" }
+      ];
+
+      let currentLyricIndex = -1;
+      const lyricsTextEl = document.getElementById('lyrics-text');
+      const lyricsTimestampEl = document.getElementById('lyrics-timestamp');
+
+      function updateLyrics(currentTime) {
+        let foundIndex = -1;
+        for (let i = lyricsData.length - 1; i >= 0; i--) {
+          if (currentTime >= lyricsData[i].time) {
+            foundIndex = i;
+            break;
+          }
+        }
+        
+        if (foundIndex !== currentLyricIndex) {
+          currentLyricIndex = foundIndex;
+          if (foundIndex >= 0 && foundIndex < lyricsData.length) {
+            const lyric = lyricsData[foundIndex];
+            lyricsTextEl.textContent = lyric.text;
+            lyricsTextEl.style.opacity = '1';
+            const minutes = Math.floor(lyric.time / 60);
+            const seconds = Math.floor(lyric.time % 60);
+            lyricsTimestampEl.textContent = `[${minutes}:${seconds.toString().padStart(2, '0')}]`;
+          } else {
+            lyricsTextEl.style.opacity = '0.2';
+            lyricsTextEl.textContent = '♪ ♫ ♪';
+            lyricsTimestampEl.textContent = '';
+          }
+        }
+      }
+
+      audio.addEventListener('timeupdate', function() {
+        if (!isNaN(this.currentTime)) {
+          updateLyrics(this.currentTime);
+        }
+      });
+
+      audio.addEventListener('play', function() {
+        updateLyrics(this.currentTime);
+      });
+
+      setTimeout(() => {
+        if (!audio.paused) {
+          updateLyrics(audio.currentTime);
+        }
+      }, 1000);
+
+      document.querySelector('.page-container').addEventListener('click', function() {
+        if (!audio.paused && !isNaN(audio.currentTime)) {
+          updateLyrics(audio.currentTime);
+        }
+      }, { passive: true });
+
+    })();
+  </script>
 </body>
 </html>
